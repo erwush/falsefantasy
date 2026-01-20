@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BarController : MonoBehaviour
 {
-
+    [SerializeField] private string barName;
     [SerializeField]private Camera cam;
     [SerializeField]private float value;
     [SerializeField]private Slider slider;
     [SerializeField]private Vector3 offset;
     [SerializeField] private Image fillImage;
     [SerializeField]private RectTransform fillArea;
-    [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject trackingTarget;
     [SerializeField] private Transform target;
 
     public void UpdateBar(float currentValue, float maxValue)
