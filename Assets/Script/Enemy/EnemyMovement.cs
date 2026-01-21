@@ -16,8 +16,6 @@ public class EnemyMovement : MonoBehaviour
     private Transform player;
     private SpriteRenderer selfSprite;
     [SerializeField] int facingDirection = 1;
-
-
     [HideInInspector] public bool canMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

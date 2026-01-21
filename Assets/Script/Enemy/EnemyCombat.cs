@@ -11,15 +11,14 @@ public class EnemyCombat : MonoBehaviour
     public float atkTimer;
     public float atkCd;
     public float atkRange;
-    public float armorRecovery;
-    public float armorInterval;
     public float armorTimer;
-    public float armorWait;
     public float finalDuration;
+    public bool isHit;
     private Combat PlayerCombat;
     private SpriteRenderer selfSprite;
     private EnemyMovement movement;
     private Coroutine armorCor;
+    private Coroutine waitCor;
     private Coroutine finalCor;
     [SerializeField] private BarController healthBar;
     [SerializeField] private Animator anim;
@@ -43,40 +42,60 @@ public class EnemyCombat : MonoBehaviour
         {
             atkTimer -= Time.deltaTime;
         }
-        if (armorTimer > 0)
+        if (isHit)
         {
-            armorTimer -= Time.deltaTime;
             if (armorCor != null)
             {
                 StopCoroutine(armorCor);
+                armorCor = null;
+            }
+            if (waitCor == null)
+            {
+                waitCor = StartCoroutine(ArmorWait());
             }
         }
-        if (armorTimer <= 0)
+        else if (!isHit)
         {
-
-            if (armorCor == null)
+            if (waitCor != null)
             {
-                armorCor = StartCoroutine(ArmorRecovering());
+                StopCoroutine(waitCor);
+                waitCor = null;
             }
         }
     }
 
     public IEnumerator ArmorRecovering()
     {
-        while (armor < maxArmor)
+        while (armor < maxArmor && !isHit)
         {
-            armor += armorRecovery;
+            armor += maxArmor * 0.2f;
             armorBar.UpdateBar(armor, maxArmor);
-            yield return new WaitForSeconds(armorInterval);
-            if (armor >= maxArmor)
+            if (armor <= maxArmor)
             {
-                armorCor = null;
-                StopCoroutine(armorCor);
                 armor = maxArmor;
             }
-        }
+            yield return new WaitForSeconds(1f);
+            if (armor >= maxArmor)
+            {
+                armor = maxArmor;
+                armorCor = null;
+                StopCoroutine(ArmorRecovering());
 
+            }
+        }
     }
+
+    public IEnumerator ArmorWait()
+    {
+        yield return new WaitForSeconds(3f);
+        isHit = false;
+        if (armorCor == null)
+        {
+            armorCor = StartCoroutine(ArmorRecovering());
+        }
+        waitCor = null;
+    }
+
     public void FinishAttacking()
     {
         if (anim.GetBool("isAttacking1") == true)
@@ -127,12 +146,14 @@ public class EnemyCombat : MonoBehaviour
         armorBar.UpdateBar(armor, maxArmor);
 
 
-        armorTimer = armorWait;
+
 
     }
 
     IEnumerator FinalDuration()
     {
+
+        StopCoroutine(ArmorRecovering());
         selfSprite.color = Color.red;
         yield return new WaitForSeconds(finalDuration);
         armor = maxArmor;

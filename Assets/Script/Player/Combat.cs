@@ -54,6 +54,8 @@ public class Combat : MonoBehaviour
                 enemyCombat = enemies[0].gameObject.GetComponent<EnemyCombat>();
                 demeg = atk;
                 enemies[0].GetComponent<EnemyCombat>().HealthChange(-demeg, -armorDmg);
+                enemies[0].GetComponent<EnemyCombat>().isHit = true;
+                // enemies[0].GetComponent<EnemyCombat>().StopCoroutine(enemies[0].GetComponent<EnemyCombat>().ArmorRecovering());
 
             }
         }
