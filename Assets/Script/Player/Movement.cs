@@ -62,6 +62,7 @@ public class Movement : MonoBehaviour
             {
                 justJumped = true;
                 doubleJumped = false;
+                rb.linearVelocity = Vector2.zero;
                 rb.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
             }
             else if (justJumped == true && doubleJumped == false)
@@ -69,6 +70,7 @@ public class Movement : MonoBehaviour
                 Debug.Log("DoubleJumped");
                 justJumped = false;
                 doubleJumped = true;
+                rb.linearVelocity = Vector2.zero;
                 rb.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
             }
         }

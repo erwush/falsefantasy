@@ -53,12 +53,17 @@ public class EnemyMovement : MonoBehaviour
 
     void Chase()
     {
-        if (player.position.x > transform.position.x && facingDirection == -1 || player.position.x < transform.position.x && facingDirection == 1)
+        // Flip arah hadap
+        if ((player.position.x > transform.position.x && facingDirection == -1) ||
+            (player.position.x < transform.position.x && facingDirection == 1))
         {
             Flip();
         }
-        Vector2 direction = (player.position - transform.position).normalized;
-        rb.linearVelocity = direction * spd;
+
+        // Gerak hanya di X
+        float dirX = Mathf.Sign(player.position.x - transform.position.x);
+        rb.linearVelocity = new Vector2(dirX * spd, rb.linearVelocity.y);
+
     }
 
     void Flip()
