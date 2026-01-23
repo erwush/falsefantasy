@@ -5,17 +5,17 @@ public abstract class EnemyMovement : MonoBehaviour
     public float spd;
     public float jumpStrength;
     public float dashStrength;
-    
+
     public EnemyState enemyState;
     public float detectRadius;
     public EnemyCombat stat;
     public Transform detectPoint;
     public LayerMask pLayer;
     public float knockback;
-    private Animator anim;
-    private Rigidbody2D rb;
-    private Transform player;
-    private SpriteRenderer selfSprite;
+    protected Animator anim;
+    protected Rigidbody2D rb;
+    protected Transform player;
+    protected SpriteRenderer selfSprite;
     [SerializeField] int facingDirection = 1;
     public bool canMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -72,7 +72,7 @@ public abstract class EnemyMovement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
-    private void CheckForPlayer()
+    public virtual void CheckForPlayer()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(detectPoint.position, detectRadius, pLayer);
 
@@ -134,11 +134,20 @@ public abstract class EnemyMovement : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-       //draw red
+        //draw red
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(detectPoint.position, detectRadius);
     }
+
+
+    public void Jump(float jumpPower)
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+    }
 }
+
+
 
 
 

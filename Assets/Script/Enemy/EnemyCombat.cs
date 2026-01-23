@@ -78,7 +78,7 @@ public abstract class EnemyCombat : MonoBehaviour
             float demeg;
             demeg = atk;
             hits[0].GetComponent<Health>().HealthChange(-demeg);
-            Debug.Log("demeg musuh:" + demeg);
+            // Debug.Log("demeg musuh:" + demeg);
 
         }
     }
@@ -107,7 +107,7 @@ public abstract class EnemyCombat : MonoBehaviour
         Gizmos.DrawWireSphere(atkPoint.position, atkRange);
     }
 
-    IEnumerator HurtAnim()
+    protected IEnumerator HurtAnim()
     {
         selfSprite.material = flashHit;
         yield return new WaitForSeconds(0.2f);

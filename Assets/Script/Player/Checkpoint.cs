@@ -20,7 +20,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.tag == "Checkpoint")
         {
-            Debug.Log("checkpoint");
+            // Debug.Log("checkpoint");
             checkpoint = other.transform;
         }
     }

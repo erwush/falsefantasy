@@ -6,7 +6,7 @@ public class Combat : MonoBehaviour
 {
     public float atk;
     public float finalStack;
-    public float maxFinal;
+    public float maxFinal = 10;
     public float atkCd;
     public float atkTimer;
     public float atkRange;
@@ -19,6 +19,7 @@ public class Combat : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        maxFinal = 10;
     }
 
 
@@ -52,7 +53,7 @@ public class Combat : MonoBehaviour
         Collider2D[] enemies = Physics2D.OverlapCircleAll(atkPoint.position, atkRange, eLayer);
         if (enemies.Length > 0)
         {
-            Debug.Log("kena");
+            // Debug.Log("kena");
             foreach (Collider2D enemy in enemies)
             {
                 enemyCombat = enemies[0].gameObject.GetComponent<EnemyCombat>();
@@ -60,10 +61,10 @@ public class Combat : MonoBehaviour
                 enemies[0].GetComponent<EnemyCombat>().HealthChange(-demeg);
                 if (!isFinal)
                 {
-                    finalStack += 10;
+                    finalStack += 1;
                     if(finalStack >= maxFinal)
                     {
-                        StartCoroutine(Finalization());
+                        StartCoroutine(Finalization(3f, 3));
                     }
 
                 }
@@ -82,12 +83,12 @@ public class Combat : MonoBehaviour
         }
     }
 
-    public IEnumerator Finalization()
+    public IEnumerator Finalization(float finalDuration, float dmgBoost)
     {
-        atk *= 3;
+        atk *= dmgBoost;
         isFinal = true;
-        yield return new WaitForSeconds(5f);
-        atk /= 3;
+        yield return new WaitForSeconds(finalDuration);
+        atk /= dmgBoost;
         isFinal = false;
         finalStack = 0;
     }

@@ -82,7 +82,7 @@ public class Movement : MonoBehaviour
 
     public void DoubleJump(float jumpPower)
     {
-        Debug.Log("DoubleJumped");
+        // Debug.Log("DoubleJumped");
         justJumped = false;
         doubleJumped = true;
         rb.linearVelocity = Vector2.zero;
