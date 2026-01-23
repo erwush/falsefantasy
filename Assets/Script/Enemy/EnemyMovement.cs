@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public abstract class EnemyMovement : MonoBehaviour
 {
     public float spd;
     public float jumpStrength;
     public float dashStrength;
-    public Rigidbody2D rb;
+    
     public EnemyState enemyState;
     public float detectRadius;
     public EnemyCombat stat;
@@ -13,10 +13,11 @@ public class EnemyMovement : MonoBehaviour
     public LayerMask pLayer;
     public float knockback;
     private Animator anim;
+    private Rigidbody2D rb;
     private Transform player;
     private SpriteRenderer selfSprite;
     [SerializeField] int facingDirection = 1;
-    [HideInInspector] public bool canMove;
+    public bool canMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -46,7 +47,6 @@ public class EnemyMovement : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             ChangeState(EnemyState.Idle);
             //chagne color to red
-            selfSprite.color = Color.red;
         }
 
     }

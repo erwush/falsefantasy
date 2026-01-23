@@ -12,8 +12,8 @@ public class Movement : MonoBehaviour
     public float spd;
     public bool isGrounded;
     public float jumpStrength;
-    public Rigidbody2D rb;
     public float knockback;
+    private Rigidbody2D rb;
     private Coroutine dashCor;
     [SerializeField] private int dashToken;
     [SerializeField] private float dashTimer;
@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
-        if(dashTimer > 0f)
+        if (dashTimer > 0f)
         {
             dashTimer -= Time.deltaTime;
         }
@@ -60,20 +60,33 @@ public class Movement : MonoBehaviour
         {
             if (isGrounded)
             {
-                justJumped = true;
-                doubleJumped = false;
-                rb.linearVelocity = Vector2.zero;
-                rb.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
+                Jump(jumpStrength, true);
             }
             else if (justJumped == true && doubleJumped == false)
             {
-                Debug.Log("DoubleJumped");
-                justJumped = false;
-                doubleJumped = true;
-                rb.linearVelocity = Vector2.zero;
-                rb.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
+                DoubleJump(jumpStrength);
             }
         }
+    }
+
+    public void Jump(float jumpPower, bool fromJump)
+    {
+        if (fromJump)
+        {
+            justJumped = true;
+            doubleJumped = false;
+        }
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+    }
+
+    public void DoubleJump(float jumpPower)
+    {
+        Debug.Log("DoubleJumped");
+        justJumped = false;
+        doubleJumped = true;
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
     }
 
     private IEnumerator DashRecovery()

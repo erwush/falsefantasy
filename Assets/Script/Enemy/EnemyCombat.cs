@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyCombat : MonoBehaviour
+public abstract class EnemyCombat : MonoBehaviour
 {
     public float hp;
     public float maxHp;
@@ -14,23 +14,29 @@ public class EnemyCombat : MonoBehaviour
     public float armorTimer;
     public float finalDuration;
     public bool isHit;
-    private Combat PlayerCombat;
-    private SpriteRenderer selfSprite;
-    private EnemyMovement movement;
-    private Coroutine armorCor;
-    private Coroutine waitCor;
-    private Coroutine finalCor;
-    [SerializeField] private BarController healthBar;
-    [SerializeField] private Animator anim;
-    [SerializeField] private BarController armorBar;
-    [SerializeField] private Transform atkPoint;
-    [SerializeField] private LayerMask pLayer;
+    public Material flashHit;
+    public Material defaultMaterial;
+    protected Combat PlayerCombat;
+    protected SpriteRenderer selfSprite;
+    protected EnemyMovement movement;
+    protected Coroutine armorCor;
+    protected Coroutine waitCor;
+    protected Coroutine finalCor;
+    
+
+    [SerializeField] protected BarController healthBar;
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected BarController armorBar;
+    [SerializeField] protected Transform atkPoint;
+    [SerializeField] protected LayerMask pLayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         anim = GetComponent<Animator>();
         movement = GetComponent<EnemyMovement>();
         selfSprite = GetComponent<SpriteRenderer>();
+        defaultMaterial = selfSprite.material;
+        
     }
 
     // Update is called once per frame
@@ -96,7 +102,7 @@ public class EnemyCombat : MonoBehaviour
         waitCor = null;
     }
 
-    public void FinishAttacking()
+    public virtual void FinishAttacking()
     {
         if (anim.GetBool("isAttacking1") == true)
         {
@@ -106,7 +112,7 @@ public class EnemyCombat : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(atkPoint.position, atkRange, pLayer);
@@ -126,8 +132,12 @@ public class EnemyCombat : MonoBehaviour
         }
     }
 
-    public void HealthChange(float hpAmount, float armorAmount)
+    public virtual void HealthChange(float hpAmount, float armorAmount)
     {
+        if(hpAmount < 0)
+        {
+            StartCoroutine(HurtAnim());
+        }
         armor += armorAmount;
         if (armor <= 0)
         {
@@ -144,13 +154,9 @@ public class EnemyCombat : MonoBehaviour
 
         healthBar.UpdateBar(hp, maxHp);
         armorBar.UpdateBar(armor, maxArmor);
-
-
-
-
     }
 
-    IEnumerator FinalDuration()
+    protected IEnumerator FinalDuration()
     {
 
         StopCoroutine(ArmorRecovering());
@@ -168,5 +174,12 @@ public class EnemyCombat : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(atkPoint.position, atkRange);
+    }
+
+    IEnumerator HurtAnim()
+    {
+        selfSprite.material = flashHit;
+        yield return new WaitForSeconds(0.2f);
+        selfSprite.material = defaultMaterial;
     }
 }
