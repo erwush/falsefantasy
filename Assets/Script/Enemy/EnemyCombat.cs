@@ -5,29 +5,21 @@ public abstract class EnemyCombat : MonoBehaviour
 {
     public float hp;
     public float maxHp;
-    public float armor;
-    public float maxArmor;
+
     public float atk;
     public float atkTimer;
     public float atkCd;
     public float atkRange;
-    public float armorTimer;
-    public float finalDuration;
+
     public bool isHit;
     public Material flashHit;
+    public Transform atkPoint;
     public Material defaultMaterial;
     protected Combat PlayerCombat;
     protected SpriteRenderer selfSprite;
     protected EnemyMovement movement;
-    protected Coroutine armorCor;
-    protected Coroutine waitCor;
-    protected Coroutine finalCor;
-    
-
     [SerializeField] protected BarController healthBar;
     [SerializeField] protected Animator anim;
-    [SerializeField] protected BarController armorBar;
-    [SerializeField] protected Transform atkPoint;
     [SerializeField] protected LayerMask pLayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,71 +28,30 @@ public abstract class EnemyCombat : MonoBehaviour
         movement = GetComponent<EnemyMovement>();
         selfSprite = GetComponent<SpriteRenderer>();
         defaultMaterial = selfSprite.material;
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         healthBar.UpdateBar(hp, maxHp);
-        armorBar.UpdateBar(armor, maxArmor);
         if (atkTimer > 0)
         {
             atkTimer -= Time.deltaTime;
         }
-        if (isHit)
-        {
-            if (armorCor != null)
-            {
-                StopCoroutine(armorCor);
-                armorCor = null;
-            }
-            if (waitCor == null)
-            {
-                waitCor = StartCoroutine(ArmorWait());
-            }
-        }
-        else if (!isHit)
-        {
-            if (waitCor != null)
-            {
-                StopCoroutine(waitCor);
-                waitCor = null;
-            }
-        }
+        // if (isHit)
+        // {
+
+        // }
+        // else if (!isHit)
+        // {
+
+        // }
     }
 
-    public IEnumerator ArmorRecovering()
-    {
-        while (armor < maxArmor && !isHit)
-        {
-            armor += maxArmor * 0.2f;
-            armorBar.UpdateBar(armor, maxArmor);
-            if (armor <= maxArmor)
-            {
-                armor = maxArmor;
-            }
-            yield return new WaitForSeconds(1f);
-            if (armor >= maxArmor)
-            {
-                armor = maxArmor;
-                armorCor = null;
-                StopCoroutine(ArmorRecovering());
 
-            }
-        }
-    }
 
-    public IEnumerator ArmorWait()
-    {
-        yield return new WaitForSeconds(3f);
-        isHit = false;
-        if (armorCor == null)
-        {
-            armorCor = StartCoroutine(ArmorRecovering());
-        }
-        waitCor = null;
-    }
+
 
     public virtual void FinishAttacking()
     {
@@ -134,40 +85,20 @@ public abstract class EnemyCombat : MonoBehaviour
 
     public virtual void HealthChange(float hpAmount, float armorAmount)
     {
-        if(hpAmount < 0)
+        if (hpAmount < 0)
         {
             StartCoroutine(HurtAnim());
         }
-        armor += armorAmount;
-        if (armor <= 0)
-        {
-            hp += hpAmount * 1.5f;
-            if (finalCor == null)
-            {
-                finalCor = StartCoroutine(FinalDuration());
-            }
-        }
-        else
-        {
-            hp += hpAmount;
-        }
+
+
+        hp += hpAmount;
+
 
         healthBar.UpdateBar(hp, maxHp);
-        armorBar.UpdateBar(armor, maxArmor);
-    }
-
-    protected IEnumerator FinalDuration()
-    {
-
-        StopCoroutine(ArmorRecovering());
-        selfSprite.color = Color.red;
-        yield return new WaitForSeconds(finalDuration);
-        armor = maxArmor;
-        armorBar.UpdateBar(armor, maxArmor);
-        selfSprite.color = Color.white;
-        finalCor = null;
 
     }
+
+
 
 
 

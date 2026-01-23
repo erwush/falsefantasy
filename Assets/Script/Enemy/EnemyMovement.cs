@@ -99,7 +99,7 @@ public abstract class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void ChangeState(EnemyState newState)
+    public virtual void ChangeState(EnemyState newState)
     {
         //Exit the current animation
         if (enemyState == EnemyState.Idle)

@@ -24,25 +24,6 @@ public class GolemCombat : EnemyCombat
         }
     }
 
-    public override void HealthChange(float hpAmount, float armorAmount)
-    {
-        armor += armorAmount;
-        if (armor <= 0)
-        {
-            hp += hpAmount * 1.5f;
-            if (finalCor == null)
-            {
-                finalCor = StartCoroutine(FinalDuration());
-            }
-        }
-        else
-        {
-            hp += hpAmount;
-        }
-
-        healthBar.UpdateBar(hp, maxHp);
-        armorBar.UpdateBar(armor, maxArmor);
-    }
 
 
 
