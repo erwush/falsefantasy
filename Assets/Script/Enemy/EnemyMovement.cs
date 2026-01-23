@@ -81,12 +81,12 @@ public abstract class EnemyMovement : MonoBehaviour
         if (hits.Length > 0)
         {
             player = hits[0].transform;
-            if (Vector2.Distance(transform.position, player.position) <= stat.atkRange && stat.atkTimer <= 0 && canMove)
+            if (Vector2.Distance(stat.atkPoint.position, player.position) <= stat.atkRange && stat.atkTimer <= 0 && canMove)
             {
 
                 ChangeState(EnemyState.Attacking);
             }
-            else if (Vector2.Distance(transform.position, player.position) > stat.atkRange && enemyState != EnemyState.Attacking && canMove)
+            else if (Vector2.Distance(stat.atkPoint.position, player.position) > stat.atkRange && enemyState != EnemyState.Attacking && canMove)
             {
                 ChangeState(EnemyState.Chasing);
             }
