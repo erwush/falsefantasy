@@ -83,7 +83,7 @@ public abstract class EnemyCombat : MonoBehaviour
         }
     }
 
-    public virtual void HealthChange(float hpAmount, float armorAmount)
+    public virtual void HealthChange(float hpAmount)
     {
         if (hpAmount < 0)
         {

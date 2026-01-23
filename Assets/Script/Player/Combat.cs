@@ -1,12 +1,16 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Combat : MonoBehaviour
 {
-    public float armorDmg;
     public float atk;
+    public float finalStack;
+    public float maxFinal;
     public float atkCd;
     public float atkTimer;
     public float atkRange;
+    public bool isFinal;
     [SerializeField] private Animator anim;
     [SerializeField] private BarController healthBar;
     [SerializeField] private Transform atkPoint;
@@ -53,7 +57,16 @@ public class Combat : MonoBehaviour
             {
                 enemyCombat = enemies[0].gameObject.GetComponent<EnemyCombat>();
                 demeg = atk;
-                enemies[0].GetComponent<EnemyCombat>().HealthChange(-demeg, -armorDmg);
+                enemies[0].GetComponent<EnemyCombat>().HealthChange(-demeg);
+                if (!isFinal)
+                {
+                    finalStack += 10;
+                    if(finalStack >= maxFinal)
+                    {
+                        StartCoroutine(Finalization());
+                    }
+
+                }
                 enemies[0].GetComponent<EnemyCombat>().isHit = true;
                 // enemies[0].GetComponent<EnemyCombat>().StopCoroutine(enemies[0].GetComponent<EnemyCombat>().ArmorRecovering());
 
@@ -67,6 +80,16 @@ public class Combat : MonoBehaviour
         {
             anim.SetBool("Attack1", false);
         }
+    }
+
+    public IEnumerator Finalization()
+    {
+        atk *= 3;
+        isFinal = true;
+        yield return new WaitForSeconds(5f);
+        atk /= 3;
+        isFinal = false;
+        finalStack = 0;
     }
 
     private void OnDrawGizmosSelected()
