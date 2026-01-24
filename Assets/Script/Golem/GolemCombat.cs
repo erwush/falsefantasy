@@ -73,13 +73,13 @@ public class GolemCombat : EnemyCombat
         //move backward
         yield return new WaitForSeconds(0.75f);
         movement.ChangeState(EnemyState.Idle);
-        movement.canMove = true;
+        movement.canMove = false;
         canAttack = false;
         movement.unstop = true;
         float dir = Mathf.Sign(transform.localScale.x);
         kolleder.excludeLayers = 0;
         // mundur dulu
-        rb.linearVelocity = new Vector2(-dir * movement.dashStrength, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(-dir * (movement.dashStrength/3), rb.linearVelocity.y);
         yield return new WaitForSeconds(0.1f);
         // terjang
         rb.linearVelocity = new Vector2(dir * movement.dashStrength, rb.linearVelocity.y);
@@ -89,11 +89,12 @@ public class GolemCombat : EnemyCombat
         {
             rb.linearVelocity = Vector2.zero;
             hits[0].GetComponent<Health>().HealthChange(-atk * 1.15f);
-            hits[0].GetComponent<Movement>().Knockback(transform, knockStrength);
+            hits[0].GetComponent<Movement>().Knockback(transform, knockStrength*1.15f);
         }
         yield return new WaitForSeconds(0.1f);
         movement.unstop = false;
         canAttack = true;
+        movement.canMove = true;
         kolleder.excludeLayers = pLayer;
 
     }
@@ -134,7 +135,8 @@ public class GolemCombat : EnemyCombat
         }
         else if (r == 1)
         {
-            isCharged[0] = true;
+            // isCharged[0] = true;
+            isCharged[1] = true;
         }
         else if (r == 2)
         {

@@ -60,7 +60,8 @@ public class FinalCombat : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         stack = 0;
-        state = 0;
+        state = 2;
+        StartCoroutine(ChangeState());
         maxStack = new int[2] { 2, 4 };
     }
 
@@ -68,11 +69,7 @@ public class FinalCombat : MonoBehaviour
 
     void Update()
     {
-        healthBar.UpdateBar(hp, maxHp);
-        if (atkTimer > 0)
-        {
-            atkTimer -= Time.deltaTime;
-        }
+        // healthBar.UpdateBar(hp, maxHp);
 
         if (skillTimer[4] <= 0)
         {
@@ -102,11 +99,14 @@ public class FinalCombat : MonoBehaviour
     
     public IEnumerator ChangeState()
     {
+        
+        
         if(state == 0)
         {
             state = 1;
             Skill0();
             Skill4();
+            Debug.Log("state1");
         }
         else if (state == 1)
         {
@@ -114,6 +114,12 @@ public class FinalCombat : MonoBehaviour
             yield return new WaitForSeconds(3f);
             state = 0;
             Skill0();
+            Debug.Log("state2");
+        } else
+        {
+            state = 0;
+            Skill0();
+            Debug.Log("state3");
         }
     }
     public void Skill0()
@@ -124,8 +130,8 @@ public class FinalCombat : MonoBehaviour
             spawnedBoss = new List<GameObject>();
             int rand1 = Random.Range(0, miniBoss.Count);
             int rand2 = Random.Range(0, miniBoss.Count);
-            spawnedBoss[0] = Instantiate(miniBoss[rand1], skill0Loc[rand1].transform.position, Quaternion.identity);
-            spawnedBoss[1] = Instantiate(miniBoss[rand1], skill0Loc[rand1].transform.position, Quaternion.identity);
+            spawnedBoss.Insert(0, Instantiate(miniBoss[rand1], skill0Loc[rand1].transform.position, Quaternion.identity));
+            spawnedBoss.Insert(1, Instantiate(miniBoss[rand2], skill0Loc[rand2].transform.position, Quaternion.identity));
             for(int i = 0; i < 2; i++)
             {
                 spawnedBoss[i].GetComponent<EnemyCombat>().isSpawned = true;

@@ -40,12 +40,12 @@ public abstract class EnemyMovement : MonoBehaviour
                 Chase();
             }
         }
-        else if (enemyState == EnemyState.Attacking)
+        else if (enemyState == EnemyState.Attacking && !unstop)
         {
             rb.linearVelocity = Vector2.zero;
 
         }
-        if (!canMove)
+        if (!canMove && !unstop)
         {
             rb.linearVelocity = Vector2.zero;
             ChangeState(EnemyState.Idle);
