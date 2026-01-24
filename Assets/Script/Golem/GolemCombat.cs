@@ -22,9 +22,11 @@ public class GolemCombat : EnemyCombat
 
             if (isCharged)
             {
+                StartCoroutine(Jump(hits[0].transform.position, demeg));
                 StartCoroutine(KnockUp(hits[0].transform.position));
                 hits[0].GetComponent<Movement>().Jump(knockStrength, false);
                 hits[0].GetComponent<Health>().HealthChange(-demeg * 1.15f);
+
             }
             else if (!isCharged)
             {
@@ -38,9 +40,29 @@ public class GolemCombat : EnemyCombat
     //hits is the psoitio
     IEnumerator KnockUp(Vector2 pos)
     {
-        GameObject quake = Instantiate(quakeEffect, new Vector2(pos.x, pos.y-1.5f), Quaternion.identity);
+        GameObject quake = Instantiate(quakeEffect, new Vector2(pos.x, pos.y - 1.5f), Quaternion.identity);
         yield return new WaitForSeconds(0.2f);
         Destroy(quake);
+    }
+    
+    IEnumerator Jump(Vector2 pos, float demeg)
+    {
+        movement.jumping = true;
+        canAttack = false;
+        yield return new WaitForSeconds(0.75f);
+        transform.position = new Vector2(pos.x, pos.y + 7f);
+        yield return new WaitForSeconds(0.25f);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, atkRange*3.5f, pLayer);
+        if (hits.Length > 0)
+        {
+            hits[0].GetComponent<Movement>().Jump(knockStrength + 10, false);
+            hits[0].GetComponent<Health>().HealthChange(-demeg * 1.15f);
+            StartCoroutine(KnockUp(hits[0].transform.position));
+        }
+        yield return new WaitForSeconds(0.5f);
+        movement.jumping = false;
+        canAttack = true;
+        
     }
 
 
@@ -65,6 +87,10 @@ public class GolemCombat : EnemyCombat
             StartCoroutine(HurtAnim());
         }
         atkCd = hp / 100f;
+        if(atkCd <= 1)
+        {
+            atkCd = 1;
+        }
 
 
         hp += hpAmount;

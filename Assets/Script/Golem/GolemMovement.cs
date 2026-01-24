@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GolemMovement : EnemyMovement
 {
+    
 
 
     public override void CheckForPlayer()
@@ -13,7 +14,7 @@ public class GolemMovement : EnemyMovement
         if (hits.Length > 0)
         {
             player = hits[0].transform;
-            if (Vector2.Distance(stat.atkPoint.position, player.position) <= stat.atkRange && canMove)
+            if (Vector2.Distance(stat.atkPoint.position, player.position) <= stat.atkRange && canMove && stat.canAttack)
             {
 
                 if (stat.atkTimer <= 0)
@@ -33,8 +34,15 @@ public class GolemMovement : EnemyMovement
         }
         else
         {
-            rb.linearVelocity = Vector2.zero;
-            ChangeState(EnemyState.Idle);
+            if (!jumping)
+            {
+                rb.linearVelocity = Vector2.zero;
+                ChangeState(EnemyState.Idle);
+            }
+            else
+            {
+                ChangeState(EnemyState.Idle);
+            }
 
         }
     }

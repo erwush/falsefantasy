@@ -17,10 +17,12 @@ public abstract class EnemyCombat : MonoBehaviour
     public Material defaultMaterial;
     protected Combat PlayerCombat;
     protected SpriteRenderer selfSprite;
+    
     protected EnemyMovement movement;
     [SerializeField] protected BarController healthBar;
     [SerializeField] protected Animator anim;
     [SerializeField] protected LayerMask pLayer;
+    [HideInInspector] public bool canAttack;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,6 +30,7 @@ public abstract class EnemyCombat : MonoBehaviour
         movement = GetComponent<EnemyMovement>();
         selfSprite = GetComponent<SpriteRenderer>();
         defaultMaterial = selfSprite.material;
+        canAttack = true;
 
     }
 

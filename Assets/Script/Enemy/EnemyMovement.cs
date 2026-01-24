@@ -5,6 +5,7 @@ public abstract class EnemyMovement : MonoBehaviour
     public float spd;
     public float jumpStrength;
     public float dashStrength;
+   
 
     public EnemyState enemyState;
     public float detectRadius;
@@ -15,8 +16,10 @@ public abstract class EnemyMovement : MonoBehaviour
     protected Animator anim;
     protected Rigidbody2D rb;
     protected Transform player;
+    
     protected SpriteRenderer selfSprite;
     [SerializeField] int facingDirection = 1;
+    [HideInInspector] public bool jumping;
     public bool canMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -81,7 +84,7 @@ public abstract class EnemyMovement : MonoBehaviour
         if (hits.Length > 0)
         {
             player = hits[0].transform;
-            if (Vector2.Distance(stat.atkPoint.position, player.position) <= stat.atkRange && stat.atkTimer <= 0 && canMove)
+            if (Vector2.Distance(stat.atkPoint.position, player.position) <= stat.atkRange && stat.atkTimer <= 0 && canMove && stat.canAttack)
             {
 
                 ChangeState(EnemyState.Attacking);
