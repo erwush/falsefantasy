@@ -10,15 +10,17 @@ public abstract class EnemyCombat : MonoBehaviour
     public float atkTimer;
     public float atkCd;
     public float atkRange;
+    public int skillAmount;
 
     public bool isHit;
     public Material flashHit;
+    public bool isSpawned;
     public Transform atkPoint;
     public Material defaultMaterial;
     protected Combat PlayerCombat;
     protected SpriteRenderer selfSprite;
     protected Rigidbody2D rb;
-    
+
     protected EnemyMovement movement;
     [SerializeField] protected BarController healthBar;
     [SerializeField] protected Animator anim;
@@ -51,6 +53,11 @@ public abstract class EnemyCombat : MonoBehaviour
         // {
 
         // }
+    }
+
+    public virtual void TriggerSkill()
+    {
+        
     }
 
 

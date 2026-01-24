@@ -11,6 +11,7 @@ public class GolemCombat : EnemyCombat
 
     void Start()
     {
+        skillAmount = 2;
         kolleder = GetComponent<Collider2D>();
         isCharged = new bool[2];
         anim = GetComponent<Animator>();
@@ -83,7 +84,7 @@ public class GolemCombat : EnemyCombat
         // terjang
         rb.linearVelocity = new Vector2(dir * movement.dashStrength, rb.linearVelocity.y);
         yield return new WaitForSeconds(0.25f);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, atkRange*1.5f, pLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, atkRange * 1.5f, pLayer);
         if (hits.Length > 0)
         {
             rb.linearVelocity = Vector2.zero;
@@ -96,6 +97,8 @@ public class GolemCombat : EnemyCombat
         kolleder.excludeLayers = pLayer;
 
     }
+    
+    
 
 
 
