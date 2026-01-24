@@ -34,7 +34,7 @@ public class GolemMovement : EnemyMovement
         }
         else
         {
-            if (!jumping)
+            if (!unstop)
             {
                 rb.linearVelocity = Vector2.zero;
                 ChangeState(EnemyState.Idle);

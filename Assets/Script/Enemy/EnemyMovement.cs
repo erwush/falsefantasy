@@ -19,7 +19,7 @@ public abstract class EnemyMovement : MonoBehaviour
     
     protected SpriteRenderer selfSprite;
     [SerializeField] int facingDirection = 1;
-    [HideInInspector] public bool jumping;
+    [HideInInspector] public bool unstop;
     public bool canMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

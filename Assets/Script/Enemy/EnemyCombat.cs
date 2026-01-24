@@ -17,6 +17,7 @@ public abstract class EnemyCombat : MonoBehaviour
     public Material defaultMaterial;
     protected Combat PlayerCombat;
     protected SpriteRenderer selfSprite;
+    protected Rigidbody2D rb;
     
     protected EnemyMovement movement;
     [SerializeField] protected BarController healthBar;
@@ -31,7 +32,7 @@ public abstract class EnemyCombat : MonoBehaviour
         selfSprite = GetComponent<SpriteRenderer>();
         defaultMaterial = selfSprite.material;
         canAttack = true;
-
+        rb =  GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame

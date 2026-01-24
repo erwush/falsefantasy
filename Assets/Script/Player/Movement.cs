@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Dash") && dashToken > 0 && dashTimer <= 0f)
+        if (canMove && Input.GetButtonDown("Dash") && dashToken > 0 && dashTimer <= 0f)
         {
             StartCoroutine(Dash());
         }
@@ -56,7 +56,7 @@ public class Movement : MonoBehaviour
             }
         }
         //*JUMP
-        if ((Input.GetButtonDown("Jump") && isGrounded || Input.GetButtonDown("Jump") && justJumped) && Time.timeScale != 0)
+        if ((canMove && Input.GetButtonDown("Jump") && isGrounded || Input.GetButtonDown("Jump") && justJumped) && Time.timeScale != 0)
         {
             if (isGrounded)
             {
@@ -132,6 +132,34 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         spd = defSpd;
         dashTimer = 0.2f;
+    }
+
+  public void Knockback(Transform enemy, float knockbackForce, float knockDuration = 0.5f)
+    {
+        canMove = false;
+        Vector2 direction = (transform.position - enemy.position).normalized;
+        rb.linearVelocity = direction * knockbackForce;
+        StartCoroutine(KnockbackCounter(knockDuration));
+    }
+
+    private IEnumerator KnockbackCounter(float knockDuration)
+    {
+
+        float elapsed = 0f;
+
+        while (elapsed < knockDuration)
+        {
+            // perlahan turunkan velocity menuju 0
+            rb.linearVelocity = Vector2.Lerp(
+                rb.linearVelocity,
+                Vector2.zero,
+                Time.deltaTime * 2.5f // 5f bisa diubah jadi lebih besar/lebih kecil
+            );
+
+            elapsed += Time.deltaTime;
+            yield return null; // tunggu 1 frame
+        }
+        canMove = true;
     }
 
 
