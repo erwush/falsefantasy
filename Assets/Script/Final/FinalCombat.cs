@@ -108,7 +108,6 @@ public class FinalCombat : MonoBehaviour
             state = 1;
             Skill0();
             Skill4();
-            Debug.Log("state1");
         }
         else if (state == 1)
         {
@@ -116,12 +115,10 @@ public class FinalCombat : MonoBehaviour
             yield return new WaitForSeconds(3f);
             state = 0;
             Skill0();
-            Debug.Log("state2");
         } else
         {
             state = 0;
             Skill0();
-            Debug.Log("state3");
         }
     }
     public void Skill0()
@@ -252,8 +249,9 @@ public class FinalCombat : MonoBehaviour
     //*When the miniboss is defeated, grant 1 stack.
     //*Can only be used at the start of each state.
 
-    //*Skill 1: Spawn an object that aim to the player and will explode once it hit a solid object or a player.
-    //*This skill can be used repeatedly up to 5 times.
+    //*Skill 1: Spawn up to 5 object at once. It will move sequentially to a locked position
+    //*Locked position is the position where the player is currently at before it start moving.
+    //*Explode once it hit its locked position.
 
     //*Skill 2: Spawn 1(or 2 in state 1) Object to random predetermined position. If the player touches the object within the duration of the skill,
     //*the Player immediately enter its Finalization state with smaller dmg boost and longer duration.
@@ -287,6 +285,11 @@ public class FinalCombat : MonoBehaviour
         selfSprite.material = flashHit;
         yield return new WaitForSeconds(0.2f);
         selfSprite.material = defaultMaterial;
+    }
+
+    public void UseSkill1()
+    {
+        StartCoroutine(Skill1());
     }
 
 

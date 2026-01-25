@@ -15,7 +15,7 @@ public class Skill1 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spd = 50f;
-        
+
         canMove = false;
     }
 
@@ -39,6 +39,21 @@ public class Skill1 : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, pLayer);
+            foreach (Collider2D hit in hits)
+            {
+                hit.GetComponent<Health>().HealthChange(-dmg);
+            }
+            Destroy(gameObject);
+        }
+    }
+
+
 
     public void OnDrawGizmos()
     {
