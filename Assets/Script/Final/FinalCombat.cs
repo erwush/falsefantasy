@@ -37,7 +37,9 @@ public class FinalCombat : MonoBehaviour
     public List<GameObject> miniBoss;
     public List<GameObject> spawnedBoss;
     public GameObject[] skill0Loc;
+    public GameObject[] skill1Loc;
     public Vector3 skill2Loc;
+    public Vector2[] skillPos;
     public GameObject[] skillObj;
 
     void Start()
@@ -132,12 +134,12 @@ public class FinalCombat : MonoBehaviour
             int rand2 = Random.Range(0, miniBoss.Count);
             spawnedBoss.Insert(0, Instantiate(miniBoss[rand1], skill0Loc[rand1].transform.position, Quaternion.identity));
             spawnedBoss.Insert(1, Instantiate(miniBoss[rand2], skill0Loc[rand2].transform.position, Quaternion.identity));
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 spawnedBoss[i].GetComponent<EnemyCombat>().isSpawned = true;
-                spawnedBoss[i].GetComponent<EnemyCombat>().hp/= 2;
-                spawnedBoss[i].GetComponent<EnemyCombat>().maxHp/= 2;
-                spawnedBoss[i].GetComponent<EnemyCombat>().atk/= 2;
+                spawnedBoss[i].GetComponent<EnemyCombat>().hp /= 2;
+                spawnedBoss[i].GetComponent<EnemyCombat>().maxHp /= 2;
+                spawnedBoss[i].GetComponent<EnemyCombat>().atk /= 2;
             }
         }
         else if (state == 1)
@@ -147,20 +149,41 @@ public class FinalCombat : MonoBehaviour
             {
                 spawnedBoss[i] = Instantiate(miniBoss[i], skill0Loc[i].transform.position, Quaternion.identity);
             }
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 spawnedBoss[i].GetComponent<EnemyCombat>().isSpawned = true;
-                spawnedBoss[i].GetComponent<EnemyCombat>().hp/= 2;
-                spawnedBoss[i].GetComponent<EnemyCombat>().maxHp/= 2;
-                spawnedBoss[i].GetComponent<EnemyCombat>().atk/= 2;
+                spawnedBoss[i].GetComponent<EnemyCombat>().hp /= 2;
+                spawnedBoss[i].GetComponent<EnemyCombat>().maxHp /= 2;
+                spawnedBoss[i].GetComponent<EnemyCombat>().atk /= 2;
             }
         }
-        
+
     }
+    
 
-    public void Skill1()
+    public IEnumerator Skill1()
     {
+        canSkill[1] = false;
 
+        int r = Random.Range(0, 5)+1;
+        GameObject[] obj = new GameObject[r];
+        for (int i = 0; i < r; i++)
+        {
+            obj[i] = Instantiate(skillObj[1], skill1Loc[i].transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.25f);
+        }
+        for(int i = 0; i < r; i++)
+        {
+            Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            obj[i].GetComponent<Skill1>().player = playerPos;
+            obj[i].GetComponent<Skill1>().canMove = true;
+            obj[i].GetComponent<Skill1>().dmg = skillDmg[1];
+            obj[i].GetComponent<Skill1>().radius = skillRadius[1];
+            obj[i].GetComponent<Skill1>().pLayer = pLayer;
+            yield return new WaitForSeconds(0.75f);
+        }
+
+        
     }
 
     //> later
@@ -186,7 +209,7 @@ public class FinalCombat : MonoBehaviour
 
     public void Skill5()
     {
-
+        
     }
 
     public IEnumerator Skill6()
@@ -227,7 +250,8 @@ public class FinalCombat : MonoBehaviour
     //*When the miniboss is defeated, grant 1 stack.
     //*Can only be used at the start of each state.
 
-    //*Skill 1: Spawn an object that explode after a few seconds and deal mid level damage with mid radius.
+    //*Skill 1: Spawn an object that aim to the player and will explode once it hit a solid object or a player.
+    //*This skill can be used repeatedly up to 5 times.
 
     //*Skill 2: Spawn 1(or 2 in state 1) Object to random predetermined position. If the player touches the object within the duration of the skill,
     //*the Player immediately enter its Finalization state with smaller dmg boost and longer duration.
@@ -243,8 +267,9 @@ public class FinalCombat : MonoBehaviour
     //*Skill 6: Lock the player. After a few seconds, immedieately deal mid level damage. This attack is dodgeable and parryable.
     //*If the player is hit by this attack, reduce player speed by 50% for 2 seconds.
 
-    //*Skill 7: Deal Unavoidable AoE damage. THis damage can be reduced but can't be negated.
+    //*Skill 7: Deal Unavoidable AoE damage. This damage can be reduced but can't be negated.
     //*Each stack gained from Skill 4 timer will increase the multiplier.
+    //*If this attack is not being parry'd, there's 30% chance to stun the player for 2 seconds.
     //*Exit state 1 and Enter state 0 after the usage of this skill.
 
     //*State Explanation

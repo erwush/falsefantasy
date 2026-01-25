@@ -91,9 +91,17 @@ public class Movement : MonoBehaviour
 
     private IEnumerator DashRecovery()
     {
+        float recoverTime;
+        if(dashToken == 0)
+        {
+            recoverTime = 1f;          
+        } else
+        {
+            recoverTime = 0.5f;
+        }
         while (dashToken < 2)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(recoverTime);
             dashToken += 1;
         }
         dashCor = null;
