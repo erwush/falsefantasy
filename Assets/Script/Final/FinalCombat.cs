@@ -172,7 +172,7 @@ public class FinalCombat : MonoBehaviour
             obj[i] = Instantiate(skillObj[1], skill1Loc[i].transform.position, Quaternion.identity);
             yield return new WaitForSeconds(0.25f);
         }
-        for(int i = 0; i < r; i++)
+        for (int i = 0; i < r; i++)
         {
             Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
             obj[i].GetComponent<Skill1>().player = playerPos;
@@ -182,6 +182,8 @@ public class FinalCombat : MonoBehaviour
             obj[i].GetComponent<Skill1>().pLayer = pLayer;
             yield return new WaitForSeconds(0.75f);
         }
+        skillTimer[1] = skillCd[1];
+        canSkill[1] = true;
 
         
     }

@@ -34,15 +34,7 @@ public class GolemMovement : EnemyMovement
         }
         else
         {
-            if (!unstop)
-            {
-                rb.linearVelocity = Vector2.zero;
-                ChangeState(EnemyState.Idle);
-            }
-            else
-            {
-                ChangeState(EnemyState.Idle);
-            }
+ChangeState(EnemyState.Idle);
 
         }
     }
