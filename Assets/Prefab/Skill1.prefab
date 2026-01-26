@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3306410243094501590}
   - component: {fileID: 8638084665548388957}
   - component: {fileID: 2723812520423951241}
-  - component: {fileID: 2310914668338234024}
+  - component: {fileID: 6441210192655650529}
   m_Layer: 0
   m_Name: Skill1
   m_TagString: Untagged
@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662080121244938642}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.8, y: 21.4, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: -29.808292, y: 21.351553, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!212 &3306410243094501590
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0bfa104cc97322f4d9320449c37c0086, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,14 +129,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e02f055a5f3ff841a834d8062cd69b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {x: 0, y: 0, z: 0}
   dmg: 20
   radius: 7
   canMove: 1
   pLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!58 &2310914668338234024
-CircleCollider2D:
+--- !u!60 &6441210192655650529
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -170,4 +171,19 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.0044374, y: -1.0560646}
+      - {x: 0.9056206, y: 0.03465271}
+      - {x: -0.987463, y: 1.012537}
+      - {x: 0.0029582977, y: -0.8930836}
+  m_UseDelaunayMesh: 0

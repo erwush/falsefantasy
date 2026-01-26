@@ -35,12 +35,14 @@ public class FinalCombat : MonoBehaviour
     public int stack;
     public int[] maxStack;
     public List<GameObject> miniBoss;
+    public AudioSource bossTheme;
     public List<GameObject> spawnedBoss;
     public GameObject[] skill0Loc;
     public GameObject[] skill1Loc;
     public Vector3 skill2Loc;
     public Vector2[] skillPos;
     public GameObject[] skillObj;
+    public Sprite[] skill1Sprite;
 
     void Start()
     {
@@ -65,6 +67,8 @@ public class FinalCombat : MonoBehaviour
         state = 2;
         StartCoroutine(ChangeState());
         maxStack = new int[2] { 2, 4 };
+        //play theme
+        bossTheme.Play();
     }
 
 
@@ -98,12 +102,12 @@ public class FinalCombat : MonoBehaviour
         }
 
     }
-    
+
     public IEnumerator ChangeState()
     {
-        
-        
-        if(state == 0)
+
+
+        if (state == 0)
         {
             state = 1;
             Skill0();
@@ -115,7 +119,8 @@ public class FinalCombat : MonoBehaviour
             yield return new WaitForSeconds(3f);
             state = 0;
             Skill0();
-        } else
+        }
+        else
         {
             state = 0;
             Skill0();
@@ -156,40 +161,78 @@ public class FinalCombat : MonoBehaviour
         }
 
     }
-    
+
 
     public IEnumerator Skill1()
     {
         canSkill[1] = false;
 
-        int r = Random.Range(0, 5)+1;
+        int r = Random.Range(0, 5) + 1;
         GameObject[] obj = new GameObject[r];
         for (int i = 0; i < r; i++)
         {
-            obj[i] = Instantiate(skillObj[1], skill1Loc[i].transform.position, Quaternion.identity);
+            //rotation 135
+            obj[i] = Instantiate(skillObj[1], skill1Loc[i].transform.position, Quaternion.Euler(0f, 0f, 135f));
+            int random = Random.Range(0, 8);
+
+            obj[i].GetComponent<SpriteRenderer>().sprite = skill1Sprite[random];
             yield return new WaitForSeconds(0.25f);
         }
         for (int i = 0; i < r; i++)
         {
             Vector3 playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            Vector2 dir = playerPos - obj[i].transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            obj[i].transform.rotation = Quaternion.Euler(0f, 0f, angle - 135f);
+            yield return new WaitForSeconds(0.25f);
             obj[i].GetComponent<Skill1>().player = playerPos;
             obj[i].GetComponent<Skill1>().canMove = true;
             obj[i].GetComponent<Skill1>().dmg = skillDmg[1];
             obj[i].GetComponent<Skill1>().radius = skillRadius[1];
             obj[i].GetComponent<Skill1>().pLayer = pLayer;
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.5f);
         }
         skillTimer[1] = skillCd[1];
         canSkill[1] = true;
 
-        
+
     }
 
+    public void UseSkill2()
+    {
+        Skill2();
+    }
     //> later
     public void Skill2()
     {
-        Vector2[] pos = new Vector2[2];
+        float rx = Random.Range(skillPos[2].x, skillPos[2].y + 1);
+        float ry = 0;
+        if (state == 1)
+        {
 
+            GameObject obj1 = Instantiate(skillObj[2], new Vector2(rx, ry), Quaternion.identity);
+            obj1.GetComponent<Skill2>().obj = gameObject;
+            GameObject obj2 = Instantiate(skillObj[2], new Vector2(rx, ry), Quaternion.identity);
+            obj2.GetComponent<Skill2>().obj = gameObject;
+        }
+        else if (state == 0)
+        {
+
+            GameObject obj = Instantiate(skillObj[2], new Vector2(rx, ry), Quaternion.identity);
+            obj.GetComponent<Skill2>().obj = gameObject;
+        }
+
+    }
+
+    
+    
+    public IEnumerator StartFinal(GameObject playerObj)
+    {
+        playerObj.GetComponent<Combat>().finalDuration = 0;
+        yield return new WaitForSeconds(0.1f);
+        playerObj.GetComponent<Combat>().StartCoroutine(playerObj.GetComponent<Combat>().Finalization(5f, 2));
+        yield return new WaitUntil(() => playerObj.GetComponent<Combat>().isFinal == false);
+        playerObj.GetComponent<Health>().HealthChange(-skillDmg[2]*playerObj.GetComponent<Combat>().finalHit);
     }
 
     public void Skill3()
@@ -208,7 +251,7 @@ public class FinalCombat : MonoBehaviour
 
     public void Skill5()
     {
-        
+
     }
 
     public IEnumerator Skill6()

@@ -11,6 +11,8 @@ public class Combat : MonoBehaviour
     public float atkTimer;
     public float atkRange;
     public bool isFinal;
+    public float finalDuration;
+    [HideInInspector] public int finalHit;
     [SerializeField] private Animator anim;
     [SerializeField] private BarController healthBar;
     [SerializeField] private Transform atkPoint;
@@ -37,6 +39,10 @@ public class Combat : MonoBehaviour
         if (atkTimer > 0)
         {
             atkTimer -= Time.deltaTime;
+        }
+        if (isFinal && finalDuration > 0)
+        {
+            finalDuration -= Time.deltaTime;
         }
     }
 
@@ -67,6 +73,9 @@ public class Combat : MonoBehaviour
                         StartCoroutine(Finalization(3f, 3));
                     }
 
+                } else
+                {
+                    finalHit += 1;
                 }
                 enemies[0].GetComponent<EnemyCombat>().isHit = true;
                 // enemies[0].GetComponent<EnemyCombat>().StopCoroutine(enemies[0].GetComponent<EnemyCombat>().ArmorRecovering());
@@ -83,14 +92,16 @@ public class Combat : MonoBehaviour
         }
     }
 
-    public IEnumerator Finalization(float finalDuration, float dmgBoost)
+    public IEnumerator Finalization(float duration, float dmgBoost)
     {
+        finalDuration = duration;
         atk *= dmgBoost;
         isFinal = true;
-        yield return new WaitForSeconds(finalDuration);
+        yield return new WaitUntil(() => finalDuration <= 0);
         atk /= dmgBoost;
         isFinal = false;
         finalStack = 0;
+        finalHit = 0;
     }
 
     private void OnDrawGizmosSelected()
