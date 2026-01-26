@@ -248,10 +248,25 @@ public class FinalCombat : MonoBehaviour
     {
         skillTimer[4] = skillCd[4];
     }
+    
+    public void UseSkill5()
+    {
+        Skill5();
+    }
 
     public void Skill5()
     {
+        float rx = Random.Range(skillPos[5].x, skillPos[5].y + 1);
+        GameObject obj = Instantiate(skillObj[5], new Vector2(rx, 3), Quaternion.identity);
+        obj.GetComponent<Skill5>().dmg = skillDmg[5];
+        //change width
+        Transform objT = obj.transform;
+        int randomWidth = Random.Range(1, 4);
+        objT.localScale = new Vector3(randomWidth, objT.localScale.y, objT.localScale.z);
+    }
 
+    public void UseSkill6(){
+        StartCoroutine(Skill6());
     }
 
     public IEnumerator Skill6()

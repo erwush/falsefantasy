@@ -97,7 +97,7 @@ public class Movement : MonoBehaviour
             recoverTime = 1f;          
         } else
         {
-            recoverTime = 0.5f;
+            recoverTime = 0.75f;
         }
         while (dashToken < 2)
         {

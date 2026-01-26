@@ -8,6 +8,7 @@ public class GolemCombat : EnemyCombat
 
     private bool[] isCharged;
     private Collider2D kolleder;
+    private bool isSkill;
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class GolemCombat : EnemyCombat
                 StartCoroutine(KnockUp(hits[0].transform.position));
                 hits[0].GetComponent<Movement>().Jump(knockStrength, false);
                 hits[0].GetComponent<Health>().HealthChange(-demeg * 1.15f);
+                isSkill = false;
 
             }
             else if (isCharged[1])
@@ -50,6 +52,7 @@ public class GolemCombat : EnemyCombat
                 hits[0].GetComponent<Movement>().Jump(knockStrength, false);
                 hits[0].GetComponent<Health>().HealthChange(-demeg * 1.15f);
                 StartCoroutine(Dash());
+                isSkill = false;
             }
             else if (!isCharged[0] && !isCharged[1])
             {
@@ -98,8 +101,8 @@ public class GolemCombat : EnemyCombat
         kolleder.excludeLayers = pLayer;
 
     }
-    
-    
+
+
 
 
 
@@ -123,10 +126,23 @@ public class GolemCombat : EnemyCombat
 
     }
 
+    public override void TriggerSkill()
+    {
+        isSkill = true;
+        movement.ChangeState(EnemyState.Attacking);
+    }
+
 
     public void RandomAttack()
     {
-        int r = Random.Range(0, 3);
+        int r;
+        if(isSkill){
+            r = Random.Range(1, 3);
+        }
+        else
+        {
+             r = Random.Range(0, 3);
+        }
 
         if (r == 0)
         {
