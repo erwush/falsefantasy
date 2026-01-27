@@ -151,8 +151,8 @@ public class GolemCombat : EnemyCombat
         }
         else if (r == 1)
         {
-            // isCharged[0] = true;
-            isCharged[1] = true;
+            isCharged[0] = true;
+            // isCharged[1] = true;
         }
         else if (r == 2)
         {

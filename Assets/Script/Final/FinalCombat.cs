@@ -280,7 +280,7 @@ public class FinalCombat : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(obj2.transform.position, skillRadius[6], pLayer);
         if (hits.Length > 0)
         {
-            Destroy(obj2);
+
             hits[0].GetComponent<Health>().HealthChange(-skillDmg[6]);
             hits[0].GetComponent<Movement>().spd /= 2;
             yield return new WaitForSeconds(2f);
@@ -288,6 +288,7 @@ public class FinalCombat : MonoBehaviour
         }
         skillTimer[6] = skillCd[6];
         canSkill[6] = true;
+        Destroy(obj2);
 
 
     }

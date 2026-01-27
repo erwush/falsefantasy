@@ -8,10 +8,13 @@ public class Combat : MonoBehaviour
     public float finalStack;
     public float maxFinal = 10;
     public float atkCd;
+    public bool isParry;
+
     public float atkTimer;
     public float atkRange;
     public bool isFinal;
     public float finalDuration;
+    public float parryTimer;
     [HideInInspector] public int finalHit;
     [SerializeField] private Animator anim;
     [SerializeField] private BarController healthBar;
@@ -44,6 +47,23 @@ public class Combat : MonoBehaviour
         {
             finalDuration -= Time.deltaTime;
         }
+        if (parryTimer > 0)
+        {
+            parryTimer -= Time.deltaTime;
+        }
+
+        if(parryTimer <= 0 && Input.GetButtonDown("Parry"))
+        {
+            StartCoroutine(parry());
+        }
+    }
+
+    IEnumerator parry()
+    {
+        isParry = true;
+        yield return new WaitForSeconds(0.3f);
+        isParry = false;
+        parryTimer = 1.5f;
     }
 
     void Attack()
@@ -68,12 +88,13 @@ public class Combat : MonoBehaviour
                 if (!isFinal)
                 {
                     finalStack += 1;
-                    if(finalStack >= maxFinal)
+                    if (finalStack >= maxFinal)
                     {
                         StartCoroutine(Finalization(3f, 3));
                     }
 
-                } else
+                }
+                else
                 {
                     finalHit += 1;
                 }
