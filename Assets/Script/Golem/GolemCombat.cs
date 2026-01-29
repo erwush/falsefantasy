@@ -82,7 +82,7 @@ public class GolemCombat : EnemyCombat
         float dir = Mathf.Sign(transform.localScale.x);
         kolleder.excludeLayers = 0;
         // mundur dulu
-        rb.linearVelocity = new Vector2(-dir * (movement.dashStrength/3), rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(-dir * (movement.dashStrength / 3), rb.linearVelocity.y);
         yield return new WaitForSeconds(0.1f);
         // terjang
         rb.linearVelocity = new Vector2(dir * movement.dashStrength, rb.linearVelocity.y);
@@ -92,7 +92,7 @@ public class GolemCombat : EnemyCombat
         {
             rb.linearVelocity = Vector2.zero;
             hits[0].GetComponent<Health>().HealthChange(-atk * 1.15f);
-            hits[0].GetComponent<Movement>().Knockback(transform, knockStrength*1.15f);
+            hits[0].GetComponent<Movement>().Knockback(transform, knockStrength * 1.15f);
         }
         yield return new WaitForSeconds(0.1f);
         movement.unstop = false;
@@ -136,12 +136,13 @@ public class GolemCombat : EnemyCombat
     public void RandomAttack()
     {
         int r;
-        if(isSkill){
+        if (isSkill)
+        {
             r = Random.Range(1, 3);
         }
         else
         {
-             r = Random.Range(0, 3);
+            r = Random.Range(0, 3);
         }
 
         if (r == 0)
@@ -171,14 +172,16 @@ public class GolemCombat : EnemyCombat
         {
             atkCd = 1;
         }
-        if(hp <= 0f)
-        {
-            Died();
-        }
+
 
 
         hp += hpAmount;
         healthBar.UpdateBar(hp, maxHp);
+
+        if (hp <= 0f)
+        {
+            Died();
+        }
 
     }
 
@@ -187,7 +190,8 @@ public class GolemCombat : EnemyCombat
         anim.SetBool("ded", true);
     }
 
-    public void DestroyObject(){
+    public void DestroyObject()
+    {
         Destroy(gameObject);
     }
 

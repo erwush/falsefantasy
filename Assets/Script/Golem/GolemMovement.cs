@@ -34,7 +34,7 @@ public class GolemMovement : EnemyMovement
                 ChangeState(EnemyState.Chasing);
             }
         }
-        else
+        else if(stat.hp > 0)
         {
             ChangeState(EnemyState.Idle);
 
