@@ -133,9 +133,9 @@ public class FinalCombat : MonoBehaviour
         {
             spawnedBoss = new List<GameObject>();
             int rand = Random.Range(0, miniBoss.Count);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
-                spawnedBoss[i] = Instantiate(miniBoss[rand], skill0Loc[i].transform.position, Quaternion.identity);
+                spawnedBoss.Insert(i, Instantiate(miniBoss[rand], skill0Loc[i].transform.position, Quaternion.identity));
             }
             for (int i = 0; i < 2; i++)
             {
@@ -150,7 +150,7 @@ public class FinalCombat : MonoBehaviour
             spawnedBoss = new List<GameObject>();
             for (int i = 0; i < 4; i++)
             {
-                spawnedBoss[i] = Instantiate(miniBoss[i], skill0Loc[i].transform.position, Quaternion.identity);
+                spawnedBoss.Insert(i, Instantiate(miniBoss[i], skill0Loc[i].transform.position, Quaternion.identity));
             }
             for (int i = 0; i < 2; i++)
             {
