@@ -171,11 +171,24 @@ public class GolemCombat : EnemyCombat
         {
             atkCd = 1;
         }
+        if(hp <= 0f)
+        {
+            Died();
+        }
 
 
         hp += hpAmount;
         healthBar.UpdateBar(hp, maxHp);
 
+    }
+
+    void Died()
+    {
+        anim.SetBool("ded", true);
+    }
+
+    public void DestroyObject(){
+        Destroy(gameObject);
     }
 
 

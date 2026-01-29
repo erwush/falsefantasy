@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class GolemMovement : EnemyMovement
 {
-    
+
+
+
 
 
     public override void CheckForPlayer()
@@ -11,7 +13,7 @@ public class GolemMovement : EnemyMovement
 
 
 
-        if (hits.Length > 0)
+        if (hits.Length > 0 && stat.hp > 0f)
         {
             player = hits[0].transform;
             if (Vector2.Distance(stat.atkPoint.position, player.position) <= stat.atkRange && canMove && stat.canAttack)
@@ -34,7 +36,7 @@ public class GolemMovement : EnemyMovement
         }
         else
         {
-ChangeState(EnemyState.Idle);
+            ChangeState(EnemyState.Idle);
 
         }
     }

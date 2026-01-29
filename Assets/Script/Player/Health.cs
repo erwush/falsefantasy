@@ -35,6 +35,10 @@ public class Health : MonoBehaviour
             {
                 hp += amount;
                 StartCoroutine(InvFrame());
+                if (hp <= 0)
+                {
+                    StartCoroutine(Death());
+                }
             }
             else if (combat.isParry)
             {
@@ -45,10 +49,7 @@ public class Health : MonoBehaviour
         {
             hp += amount;
         }
-        if (hp <= 0)
-        {
-            StartCoroutine(Death());
-        }
+
         if (hp > maxHp)
         {
             hp = maxHp;
