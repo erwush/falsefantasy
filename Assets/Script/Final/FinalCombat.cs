@@ -132,10 +132,11 @@ public class FinalCombat : MonoBehaviour
         if (state == 0)
         {
             spawnedBoss = new List<GameObject>();
-            int rand1 = Random.Range(0, miniBoss.Count);
-            int rand2 = Random.Range(0, miniBoss.Count);
-            spawnedBoss.Insert(0, Instantiate(miniBoss[rand1], skill0Loc[rand1].transform.position, Quaternion.identity));
-            spawnedBoss.Insert(1, Instantiate(miniBoss[rand2], skill0Loc[rand2].transform.position, Quaternion.identity));
+            int rand = Random.Range(0, miniBoss.Count);
+            for (int i = 0; i < 4; i++)
+            {
+                spawnedBoss[i] = Instantiate(miniBoss[rand], skill0Loc[i].transform.position, Quaternion.identity);
+            }
             for (int i = 0; i < 2; i++)
             {
                 spawnedBoss[i].GetComponent<EnemyCombat>().isSpawned = true;
