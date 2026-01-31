@@ -601,7 +601,6 @@ GameObject:
   - component: {fileID: 590575926}
   - component: {fileID: 590575925}
   - component: {fileID: 590575931}
-  - component: {fileID: 590575933}
   m_Layer: 6
   m_Name: Pemain
   m_TagString: Player
@@ -836,20 +835,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223e1b3985c7866469fa0d3ecdb67c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 222
+  hp: 1
   maxHp: 500
---- !u!114 &590575933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590575924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00a5f69bfd5ad764584ae21c1b5c4c6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  checkpoint: {fileID: 0}
 --- !u!1 &675876092
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,7 +1170,7 @@ RectTransform:
   m_Father: {fileID: 675876093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2012,7 +2000,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1283091393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2162,7 +2150,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1
+  m_Mass: 2.0124354
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 6
@@ -3507,6 +3495,7 @@ GameObject:
   - component: {fileID: 2145463303}
   - component: {fileID: 2145463302}
   - component: {fileID: 2145463304}
+  - component: {fileID: 2145463305}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Checkpoint
@@ -3635,6 +3624,18 @@ PolygonCollider2D:
       - {x: 0, y: -0.25}
       - {x: 0.5, y: 0}
   m_UseDelaunayMesh: 0
+--- !u!114 &2145463305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145463301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00a5f69bfd5ad764584ae21c1b5c4c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &798201558423269555
 PrefabInstance:
   m_ObjectHideFlags: 0

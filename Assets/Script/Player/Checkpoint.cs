@@ -3,6 +3,7 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     private Transform checkpoint;
+    private bool isChecked;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,15 +19,13 @@ public class Checkpoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Checkpoint")
+        if (other.tag == "Player" && !isChecked)
         {
             // Debug.Log("checkpoint");
-            checkpoint = other.transform;
+            isChecked = true;
+            other.GetComponent<Health>().checkpoint = transform;
         }
     }
     
-    public void Respawn()
-    {
-        transform.position = new Vector3(checkpoint.position.x, checkpoint.position.y + 7, checkpoint.position.z);
-    }
+
 }

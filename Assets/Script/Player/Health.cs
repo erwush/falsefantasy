@@ -6,16 +6,15 @@ public class Health : MonoBehaviour
 {
     public float hp;
     public float maxHp;
-    private Checkpoint checkpoint;
     private Combat combat;
     private Movement movement;
     private bool iFrame;
     private Collider2D col;
+    [HideInInspector] public Transform checkpoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        checkpoint = GetComponent<Checkpoint>();
         combat = GetComponent<Combat>();
         movement = GetComponent<Movement>();
         col = GetComponent<Collider2D>();
@@ -34,10 +33,12 @@ public class Health : MonoBehaviour
             if (amount < 0 && !combat.isParry)
             {
                 hp += amount;
-                StartCoroutine(InvFrame());
+                
                 if (hp <= 0)
                 {
                     StartCoroutine(Death());
+                } else {
+                    StartCoroutine(InvFrame());
                 }
             }
             else if (combat.isParry)
@@ -71,9 +72,14 @@ public class Health : MonoBehaviour
         yield return new WaitForSeconds(1.15f);
         hp = maxHp;
         col.isTrigger = false;
-        checkpoint.Respawn();
+        Respawn();
         iFrame = false;
 
+    }
+
+    public void Respawn()
+    {
+        transform.position = new Vector3(checkpoint.position.x, checkpoint.position.y + 7, checkpoint.position.z);
     }
 
 }
