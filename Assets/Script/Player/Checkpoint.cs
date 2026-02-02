@@ -4,10 +4,12 @@ public class Checkpoint : MonoBehaviour
 {
     private Transform checkpoint;
     private bool isChecked;
+    private SpriteRenderer sprite;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
         
     }
 
@@ -24,6 +26,7 @@ public class Checkpoint : MonoBehaviour
             // Debug.Log("checkpoint");
             isChecked = true;
             other.GetComponent<Health>().checkpoint = transform;
+            sprite.color = Color.green;
         }
     }
     

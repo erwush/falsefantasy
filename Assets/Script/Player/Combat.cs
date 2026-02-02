@@ -20,6 +20,7 @@ public class Combat : MonoBehaviour
     [SerializeField] private BarController healthBar;
     [SerializeField] private Transform atkPoint;
     [SerializeField] private LayerMask eLayer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,6 +36,7 @@ public class Combat : MonoBehaviour
         {
             Attack();
         }
+        
     }
 
     void Update()

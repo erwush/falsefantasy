@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
     private Movement movement;
     private bool iFrame;
     private Collider2D col;
+    [SerializeField] private BarController healthBar;
     [HideInInspector] public Transform checkpoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,11 +19,13 @@ public class Health : MonoBehaviour
         combat = GetComponent<Combat>();
         movement = GetComponent<Movement>();
         col = GetComponent<Collider2D>();
+        healthBar = GetComponentInChildren<BarController>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthBar.UpdateBar(hp, maxHp);
 
     }
 
@@ -33,11 +36,13 @@ public class Health : MonoBehaviour
             if (amount < 0 && !combat.isParry)
             {
                 hp += amount;
-                
+
                 if (hp <= 0)
                 {
                     StartCoroutine(Death());
-                } else {
+                }
+                else
+                {
                     StartCoroutine(InvFrame());
                 }
             }
