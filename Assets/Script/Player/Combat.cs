@@ -20,11 +20,13 @@ public class Combat : MonoBehaviour
     [SerializeField] private BarController healthBar;
     [SerializeField] private Transform atkPoint;
     [SerializeField] private LayerMask eLayer;
+    [SerializeField] private Movement movement;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         anim = GetComponent<Animator>();
+        movement = GetComponent<Movement>();
         maxFinal = 10;
     }
 
@@ -32,7 +34,7 @@ public class Combat : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetButtonDown("Attack") && atkTimer <= 0)
+        if (Input.GetButtonDown("Attack") && atkTimer <= 0 && movement.canMove)
         {
             Attack();
         }

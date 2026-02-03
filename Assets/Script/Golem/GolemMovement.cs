@@ -34,11 +34,21 @@ public class GolemMovement : EnemyMovement
                 ChangeState(EnemyState.Chasing);
             }
         }
-        else if(stat.hp > 0 && enemyState != EnemyState.Attacking)
+        else if (stat.hp > 0 && enemyState != EnemyState.Attacking)
         {
             ChangeState(EnemyState.Idle);
 
         }
+    }
+
+    public override void Flip()
+    {
+        if (!unstop)
+        {
+            facingDirection *= -1;
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
+
     }
 
 }

@@ -18,7 +18,7 @@ public abstract class EnemyMovement : MonoBehaviour
     protected Transform player;
     
     protected SpriteRenderer selfSprite;
-    [SerializeField] int facingDirection = 1;
+    [SerializeField] protected int facingDirection = 1;
     [HideInInspector] public bool unstop;
     public bool canMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -69,7 +69,7 @@ public abstract class EnemyMovement : MonoBehaviour
 
     }
 
-    void Flip()
+    public virtual void Flip()
     {
         facingDirection *= -1;
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);

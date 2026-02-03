@@ -29,6 +29,11 @@ public class BarController : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        // slider.transform.localScale = new Vector3 (0.02, 0.02, ;
+    }
+
 
 
 

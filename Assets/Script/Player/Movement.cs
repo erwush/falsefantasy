@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private int dashToken;
     [SerializeField] private float dashTimer;
     [SerializeField] private Animator anim;
-    [SerializeField] private bool canMove;
+    [SerializeField] public bool canMove;
     [SerializeField] private int facingDirection = 1;
     [SerializeField] private Collider2D groundCheck;
     [SerializeField] private bool doubleJumped;
@@ -115,7 +115,7 @@ public class Movement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(direct.x * spd, rb.linearVelocity.y);
         }
-        if (direct.x != 0)
+        if (direct.x != 0 && canMove)
         {
             anim.SetBool("isWalking", true);
         }
@@ -124,7 +124,7 @@ public class Movement : MonoBehaviour
             anim.SetBool("isWalking", false);
         }
 
-        if (direct.x > 0 && facingDirection < 0 || direct.x < 0 && facingDirection > 0)
+        if (direct.x > 0 && facingDirection < 0 || direct.x < 0 && facingDirection > 0 && canMove)
         {
             Flip();
         }
