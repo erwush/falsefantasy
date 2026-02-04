@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1340319199873054118}
   - component: {fileID: 1843991037608835657}
   - component: {fileID: 8196967759678168484}
+  - component: {fileID: 7399125274350762205}
   m_Layer: 6
   m_Name: Pemain
   m_TagString: Player
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1196437429515163257, guid: 6b0dc1256ae7e24479c15e477c623bcd, type: 3}
+  m_Sprite: {fileID: 815424164945274260, guid: d9d90497d1a7d8043858f4fa213ef279, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,9 +109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223e1b3985c7866469fa0d3ecdb67c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1
-  maxHp: 500
-  healthBar: {fileID: 0}
+  hp: 555555
+  maxHp: 555555
+  healthBar: {fileID: 8196967759678168484}
   checkpoint: {fileID: 0}
 --- !u!114 &5741814514402907849
 MonoBehaviour:
@@ -127,20 +128,23 @@ MonoBehaviour:
   atk: 25
   finalStack: 0
   maxFinal: 10
-  atkCd: 0.35
+  atkCd: 0.3
   isParry: 0
-  atkTimer: 0
+  finalVign: {fileID: 0}
+  atkTimer: 0.3
   atkRange: 1.85
   isFinal: 0
   finalDuration: 0
+  finalBar: {fileID: 7399125274350762205}
   parryTimer: 0
   finalHit: 0
   anim: {fileID: 0}
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 8196967759678168484}
   atkPoint: {fileID: 4137254249817450680}
   eLayer:
     serializedVersion: 2
     m_Bits: 128
+  movement: {fileID: 0}
 --- !u!114 &266167878045770281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +272,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barName: hp
+  cam: {fileID: 0}
+  value: 0
+  slider: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  fillImage: {fileID: 0}
+  fillArea: {fileID: 0}
+  trackingTarget: {fileID: 0}
+  target: {fileID: 0}
+--- !u!114 &7399125274350762205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381453372978513918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363a89033bbf1fd42964da1f4eb19882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barName: final
   cam: {fileID: 0}
   value: 0
   slider: {fileID: 0}
