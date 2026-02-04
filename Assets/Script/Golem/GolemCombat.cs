@@ -102,6 +102,21 @@ public class GolemCombat : EnemyCombat
 
     }
 
+    public void UseSkill(int i)
+    {
+        if (i == 3)
+        {
+            isCharged[0] = false;
+            isCharged[1] = false;
+        }
+        else
+        {
+            isCharged[i] = true;
+        }
+
+        Attack();
+    }
+
 
 
 
