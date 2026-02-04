@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Combat : MonoBehaviour
 {
@@ -46,11 +47,13 @@ public class Combat : MonoBehaviour
     {
         if (!isFinal)
         {
-            finalBar.UpdateBar(finalHit, 10);
+            finalBar.UpdateBar(finalStack, 10);
+            //  finalBar.slider.direction = Slider.Direction.LeftToRight;
         }
         else
         {
             finalBar.UpdateBar(finalDuration, 5f);
+            // finalBar.slider.direction = Slider.Direction.RightToLeft;
         }
         if (atkTimer > 0)
         {

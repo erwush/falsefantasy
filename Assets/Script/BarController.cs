@@ -5,7 +5,7 @@ public class BarController : MonoBehaviour
     [SerializeField] private string barName;
     [SerializeField]private Camera cam;
     [SerializeField]private float value;
-    [SerializeField]private Slider slider;
+    [SerializeField]public Slider slider;
     [SerializeField]private Vector3 offset;
     [SerializeField] private Image fillImage;
     [SerializeField]private RectTransform fillArea;
@@ -17,15 +17,15 @@ public class BarController : MonoBehaviour
         slider.value = currentValue / maxValue;
         if (slider.value > 0.5f)
         {
-            fillImage.color = Color.green;
+            // fillImage.color = Color.green;
         }
         else if (slider.value <= 0.5f && slider.value > 0.15f)
         {
-            fillImage.color = Color.yellow;
+            // fillImage.color = Color.yellow;
         }
         else
         {
-            fillImage.color = Color.red;
+            // fillImage.color = Color.red;
         }
     }
 
