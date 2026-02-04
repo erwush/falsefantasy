@@ -62,7 +62,6 @@ public class GolemCombat : EnemyCombat
 
         }
     }
-
     //hits is the psoitio
     IEnumerator KnockUp(Vector2 pos)
     {
@@ -106,12 +105,21 @@ public class GolemCombat : EnemyCombat
     {
         if (i == 3)
         {
+
             isCharged[0] = false;
             isCharged[1] = false;
         }
         else
         {
-            isCharged[i] = true;
+            if(i == 1)
+            {
+                isCharged[1] = true;
+                isCharged[0] = false;
+            } else
+            {
+                isCharged[0] = true;
+                isCharged[1] = false;
+            }
         }
 
         Attack();

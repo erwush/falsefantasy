@@ -12,20 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9545d8f0ad2f1546a9ca786d709ac24, type: 3}
   m_Name: DialogTest
   m_EditorClassIdentifier: 
-  dialogCount: 4
-  currentDial: 0
+  dialogCount: 5
+  currentDial: 5
   nama:
-  - Hawk Tuah
-  - Hawk Jebat
-  - Hawk Jebat
-  - Hawk Tuah
+  - Naget
+  - Naget
+  - Naget
+  - Naget
+  - Naget
   text:
-  - Woee antek antek asing
-  - Hidup jokowi
-  - Skibidi dap dap dap yes yes
-  - Skibidi dap dap brib brib
+  - Ini dialog
+  - Sekedar contoh
+  - Kedepannya akan diganti
+  - dan akan ada lebih banyak dialog
+  - mantap
   avatar:
-  - {fileID: 815424164945274260, guid: d9d90497d1a7d8043858f4fa213ef279, type: 3}
-  - {fileID: 815424164945274260, guid: d9d90497d1a7d8043858f4fa213ef279, type: 3}
-  - {fileID: 815424164945274260, guid: d9d90497d1a7d8043858f4fa213ef279, type: 3}
-  - {fileID: 815424164945274260, guid: d9d90497d1a7d8043858f4fa213ef279, type: 3}
+  - {fileID: 21300000, guid: f5832597974c1b64ab15e4a0076534ca, type: 3}
+  - {fileID: 21300000, guid: f5832597974c1b64ab15e4a0076534ca, type: 3}
+  - {fileID: 21300000, guid: f5832597974c1b64ab15e4a0076534ca, type: 3}
+  - {fileID: 21300000, guid: f5832597974c1b64ab15e4a0076534ca, type: 3}
+  - {fileID: 21300000, guid: f5832597974c1b64ab15e4a0076534ca, type: 3}

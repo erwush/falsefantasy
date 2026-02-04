@@ -9,11 +9,12 @@ public class Combat : MonoBehaviour
     public float maxFinal = 10;
     public float atkCd;
     public bool isParry;
-
+    public GameObject finalVign;
     public float atkTimer;
     public float atkRange;
     public bool isFinal;
     public float finalDuration;
+    public BarController finalBar;
     public float parryTimer;
     [HideInInspector] public int finalHit;
     [SerializeField] private Animator anim;
@@ -43,6 +44,14 @@ public class Combat : MonoBehaviour
 
     void Update()
     {
+        if (!isFinal)
+        {
+            finalBar.UpdateBar(finalHit, 10);
+        }
+        else
+        {
+            finalBar.UpdateBar(finalDuration, 5f);
+        }
         if (atkTimer > 0)
         {
             atkTimer -= Time.deltaTime;
@@ -119,12 +128,14 @@ public class Combat : MonoBehaviour
 
     public IEnumerator Finalization(float duration, float dmgBoost)
     {
+        finalVign.SetActive(true);
         finalDuration = duration;
         atk *= dmgBoost;
         isFinal = true;
         yield return new WaitUntil(() => finalDuration <= 0);
         atk /= dmgBoost;
         isFinal = false;
+        finalVign.SetActive(false);
         finalStack = 0;
         finalHit = 0;
     }
