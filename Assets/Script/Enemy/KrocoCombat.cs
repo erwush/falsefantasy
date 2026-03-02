@@ -29,7 +29,6 @@ public  class KrocoCombat : EnemyCombat
         // }
         // else if (!isHit)
         // {
-
         // }
     }
 
